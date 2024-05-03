@@ -6,12 +6,14 @@ class SiteController {
     async index(req,res) {
         try {
             const courses = await Course.find({});
-            res.json(courses)
-            res.render("home")
+            // res.json(courses)
+            courses = courses.map(courses=> courses.toObject())
+            res.render("home", {
+                courses
+            })
         } catch (error) {
             res.status(400).json({eror:"Error"})
         }
-        
     }
 
      //[GET] /
