@@ -1,5 +1,5 @@
 const Course = require('../models/Course')
-
+const {multipleMongooseToObject} = require('../../util/mongoose')
 class SiteController {
 
     //[GET] /
@@ -7,14 +7,13 @@ class SiteController {
         try {
             const courses = await Course.find({});
             // res.json(courses)
-            courses = courses.map(courses=> courses.toObject())
             res.render("home", {
-                courses
+                courses: multipleMongooseToObject(courses)
             })
         } catch (error) {
             res.status(400).json({eror:"Error"})
         }
-    }
+    } 
 
      //[GET] /
     search(req,res) {
