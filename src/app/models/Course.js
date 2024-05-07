@@ -2,7 +2,8 @@ const { create } = require('express-handlebars');
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-updater');
 const Schema = mongoose.Schema;
-mongoose.plugin(slug);
+const mongooseDelete = require('mongoose-delete');
+
 
 const Course = new Schema({
     name: {type: String, require: true},
@@ -13,5 +14,9 @@ const Course = new Schema({
   }, {
     timestamps: true
   });
-
+  // Add plugin
+  mongoose.plugin(slug);
+  Course.plugin(mongooseDelete, { 
+    deletedAt: true, 
+    overrideMethods: 'all' })
   module.exports = mongoose.model('Course', Course)  
