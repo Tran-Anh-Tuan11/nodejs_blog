@@ -1,13 +1,17 @@
 const { create } = require('express-handlebars');
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-updater');
 const Schema = mongoose.Schema;
+mongoose.plugin(slug);
 
 const Course = new Schema({
-    name: {type: String, maxLength: 255},
-    descripstion: {type: String, maxLength: 600},
-    image: {type: String, maxLength: 255},
-    createAt: {type: Date, default: Date.now},
-    updateAt: {type: Date, default: Date.now},
+    name: {type: String, require: true},
+    description: {type: String},
+    videoId: {type: String, require: true},
+    image: {type: String},
+    slug: { type: String, slug: 'name', unique: true }
+  }, {
+    timestamps: true
   });
 
-  module.exports = mongoose.model('Course', Course)
+  module.exports = mongoose.model('Course', Course)  
