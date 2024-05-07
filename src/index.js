@@ -19,7 +19,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 //Template engine 
 app.engine('.hbs', engine( 
     {
-        extname: '.hbs'
+        extname: '.hbs',
+        helpers: {
+            sum: (a,b) => a+b
+        }
     }
 ))
   
