@@ -1,6 +1,7 @@
 var path = require('path');
 const express = require('express')
 const morgan = require('morgan')
+const methodOverride = require('method-override')
 const { engine } = require('express-handlebars')
 const db = require('./config/db')
 
@@ -9,7 +10,6 @@ db.connect();
 
 const app = express()
 const port = 8000
-
 const route = require('./routes')
 
 app.use(express.static(path.join(__dirname, 'public')))
@@ -32,6 +32,7 @@ app.use(express.urlencoded(
     }
 ))
 app.use(express.json())
+app.use(methodOverride('_method'))
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'resources/views'));
 
